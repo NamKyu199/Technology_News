@@ -7,12 +7,9 @@ import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { KeyboardAwareScrollView } from 'react-native-ui-lib';
 import styles from './styles';
-import SelectLanguage from '~components/SelectLanguage';
 import { Avatar, Button, TextInput } from 'react-native-paper';
 import { SignInSchema } from '~utils/Validation';
 import InputComponent from '~components/InputComponent';
-import LottieView from 'lottie-react-native';
-import { ANIMATION } from '~utils/svg';
 import AppImage from '~utils/png';
 import CheckBox from '~components/CheckBox';
 
@@ -21,7 +18,9 @@ const LoginScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [checked, setChecked] = useState(false);
-  const handleLogin = async (phoneNumber: string, password: string) => { };
+  const handleLogin = async (phoneNumber: string, password: string) => { 
+    navigation.navigate('HomeScreen')
+  };
 
   const handleForgotPassword = () => {
     navigation.navigate('ForgotPasswordScreen');
@@ -37,37 +36,10 @@ const LoginScreen = () => {
         contentContainerStyle={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.header}>
-          <SelectLanguage />
         </View>
         <View style={styles.content}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 100,
-              marginBottom: 10,
-            }}>
-            <LottieView
-              source={ANIMATION.lines}
-              loop
-              autoPlay
-              style={{ width: 200, height: 200, position: 'absolute' }}
-            />
-            <View
-              style={[
-                {
-                  width: 100,
-                  height: 100,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                },
-              ]}>
-              <Avatar.Image size={110} source={AppImage.avatarDefault} />
-            </View>
-          </View>
           <Image style={styles.logo} source={AppImage.logoDefault} />
-          <Text style={styles.textGetting}>{t('common:getting')}</Text>
+          <Text style={styles.textGetting}>{t('')}</Text>
 
           <Formik
             initialValues={{ phoneNumber: '', password: '' }}
@@ -81,7 +53,7 @@ const LoginScreen = () => {
                   component={InputComponent}
                   name="phoneNumber"
                   keyboardType="numeric"
-                  label={t('label:email')}
+                  label={t('Email')}
                   left={
                     <TextInput.Icon
                       icon={() => (
@@ -96,7 +68,7 @@ const LoginScreen = () => {
                 <Field
                   component={InputComponent}
                   name="password"
-                  label={t('label:password')}
+                  label={t('Mật khẩu')}
                   secureTextEntry={!isShowPassword}
                   left={
                     <TextInput.Icon
@@ -124,13 +96,13 @@ const LoginScreen = () => {
                 />
                 <View style={styles.formOption}>
                   <CheckBox
-                    title={t('common:rememberMe')}
+                    title={t('Lưu mật khẩu')}
                     isChecked={checked}
                     onPress={() => setChecked(!checked)}
                   />
                   <TouchableOpacity onPress={handleForgotPassword}>
                     <Text style={styles.forgotPassword}>
-                      {t('common:forgotPassword')}
+                      {t('Quên mật khẩu')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -142,7 +114,7 @@ const LoginScreen = () => {
                     disabled={!isValid}
                     onPress={() => handleSubmit()}
                   >
-                    {t('button:signIn')}
+                    {t('Đăng nhập')}
                   </Button>
                   <Button
                     style={styles.button}
@@ -150,7 +122,7 @@ const LoginScreen = () => {
                     buttonColor="#6655D0"
                     onPress={handleRegister}
                   >
-                    {t('button:signUp')}
+                    {t('Đăng ký')}
                   </Button>
                 </View>
               </View>
